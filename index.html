@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f766e"><link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css"><title>আমার টাকা হিসাব</title>
+</head>
+<body>
+<header><div><h1>আমার টাকা হিসাব</h1><small>ধার • ফেরত • নগদ ব্যালেন্স</small></div><button id="installBtn" hidden>অ্যাপ ইনস্টল</button></header>
+<main>
+<section class="cards">
+<div class="card"><span>বর্তমান নগদ</span><strong id="cash">৳০</strong></div>
+<div class="card"><span>মোট ধার</span><strong id="lent">৳০</strong></div>
+<div class="card"><span>মোট ফেরত</span><strong id="returned">৳০</strong></div>
+<div class="card"><span>মোট বাকি</span><strong id="due">৳০</strong></div>
+</section>
+<section class="panel">
+<div class="sectionHead"><h2>লেনদেন যোগ করুন</h2></div>
+<form id="txForm">
+<input id="name" placeholder="ব্যক্তির নাম" required>
+<select id="type"><option value="lent">ধার দিলাম</option><option value="returned">ফেরত পেলাম</option><option value="cash_in">নগদ জমা</option><option value="expense">খরচ</option></select>
+<input id="amount" type="number" min="1" step="1" placeholder="টাকার পরিমাণ" required>
+<input id="date" type="date" required>
+<input id="note" placeholder="নোট (ঐচ্ছিক)">
+<button class="primary">সংরক্ষণ করুন</button>
+</form>
+</section>
+<section class="panel">
+<div class="sectionHead"><h2>যাদের কাছে টাকা বাকি</h2><input id="search" placeholder="নাম খুঁজুন"></div>
+<div id="people"></div>
+</section>
+<section class="panel">
+<div class="sectionHead"><h2>সাম্প্রতিক লেনদেন</h2><button id="exportBtn">CSV</button></div>
+<div id="transactions"></div>
+</section>
+<section class="panel">
+<div class="sectionHead"><h2>সেটিংস</h2></div>
+<div class="settings">
+<label>শুরুর নগদ <input id="opening" type="number" min="0" value="500000"></label>
+<button id="saveOpening" class="primary">শুরুর ব্যালেন্স সেট করুন</button>
+<button id="backupBtn">Backup JSON</button><label class="fileBtn">Restore JSON<input id="restore" type="file" accept=".json" hidden></label>
+<button id="clearBtn" class="danger">সব ডাটা মুছুন</button>
+</div>
+</section>
+</main>
+<footer>ডাটা এই ডিভাইসেই সংরক্ষিত থাকে। Cloud sync চাইলে Supabase যুক্ত করা যাবে।</footer>
+<script src="app.js"></script>
+</body></html>
