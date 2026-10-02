@@ -1,1 +1,16 @@
-{"name":"আমার টাকা হিসাব","short_name":"টাকা হিসাব","start_url":"./","display":"standalone","background_color":"#f3f6f6","theme_color":"#0f766e","lang":"bn","icons":[]}
+{
+  "name":"আমার টাকা হিসাব",
+  "short_name":"টাকা হিসাব",
+  "description":"ধার, ফেরত, নগদ ও বাকি টাকার হিসাব",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "display_override":["window-controls-overlay","standalone"],
+  "background_color":"#f3f6f6",
+  "theme_color":"#0f766e",
+  "lang":"bn-BD",
+  "icons":[
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

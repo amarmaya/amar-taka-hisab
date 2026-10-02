@@ -2,11 +2,12 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f766e"><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f766e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="style.css"><title>আমার টাকা হিসাব</title>
 </head>
 <body>
 <header><div><h1>আমার টাকা হিসাব</h1><small>ধার • ফেরত • নগদ ব্যালেন্স</small></div><button id="installBtn" hidden>অ্যাপ ইনস্টল</button></header>
+<div id="installBanner" class="installBanner" hidden><b>📱 অ্যাপ হিসেবে ইনস্টল করুন</b><span>Home Screen থেকে দ্রুত খুলতে Install চাপুন।</span><button id="bannerInstall" class="primary">Install</button><button id="bannerClose">×</button></div>
 <main>
 <section class="cards">
 <div class="card"><span>বর্তমান নগদ</span><strong id="cash">৳০</strong></div>
@@ -28,6 +29,10 @@
 <section class="panel">
 <div class="sectionHead"><h2>যাদের কাছে টাকা বাকি</h2><input id="search" placeholder="নাম খুঁজুন"></div>
 <div id="people"></div>
+</section>
+<section class="panel" id="personPanel" hidden>
+<div class="sectionHead"><h2 id="personTitle">ব্যক্তির হিসাব</h2><button id="closePerson">বন্ধ</button></div>
+<div id="personSummary"></div><div id="personTx"></div>
 </section>
 <section class="panel">
 <div class="sectionHead"><h2>সাম্প্রতিক লেনদেন</h2><button id="exportBtn">CSV</button></div>
