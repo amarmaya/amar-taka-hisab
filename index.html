@@ -1,53 +1,115 @@
 <!doctype html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f766e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png">
-<link rel="stylesheet" href="style.css"><title>আমার টাকা হিসাব</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b7a6e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="আমার টাকা হিসাব">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="stylesheet" href="./style.css">
+<title>আমার টাকা হিসাব</title>
 </head>
 <body>
-<header><div><h1>আমার টাকা হিসাব</h1><small>ধার • ফেরত • নগদ ব্যালেন্স</small></div><button id="installBtn" hidden>অ্যাপ ইনস্টল</button></header>
-<div id="installBanner" class="installBanner" hidden><b>📱 অ্যাপ হিসেবে ইনস্টল করুন</b><span>Home Screen থেকে দ্রুত খুলতে Install চাপুন।</span><button id="bannerInstall" class="primary">Install</button><button id="bannerClose">×</button></div>
+<div id="toast"></div>
+<header class="topbar">
+  <div class="brand"><div class="logo">৳</div><div><h1>আমার টাকা হিসাব</h1><small>সহজ • নিরাপদ • পরিষ্কার</small></div></div>
+  <button id="installTop" class="iconBtn" hidden>⬇</button>
+</header>
+
 <main>
-<section class="cards">
-<div class="card"><span>বর্তমান নগদ</span><strong id="cash">৳০</strong></div>
-<div class="card"><span>মোট ধার</span><strong id="lent">৳০</strong></div>
-<div class="card"><span>মোট ফেরত</span><strong id="returned">৳০</strong></div>
-<div class="card"><span>মোট বাকি</span><strong id="due">৳০</strong></div>
+<section id="dashboard" class="page active">
+  <div class="hero">
+    <div><span>বর্তমানে হাতে আছে</span><strong id="cash">৳৫,০০,০০০</strong></div>
+    <button id="quickAdd" class="fab">＋</button>
+  </div>
+  <div class="grid4">
+    <div class="stat"><span>মোট ধার</span><b id="lent">৳০</b><small>অন্যের কাছে</small></div>
+    <div class="stat"><span>ফেরত পেয়েছি</span><b id="returned">৳০</b><small>এ পর্যন্ত</small></div>
+    <div class="stat"><span>মোট বাকি</span><b id="due">৳০</b><small>পাওনা</small></div>
+    <div class="stat"><span>মোট খরচ</span><b id="expense">৳০</b><small>রেকর্ড করা</small></div>
+  </div>
+  <div class="panel">
+    <div class="head"><h2>দ্রুত কাজ</h2></div>
+    <div class="quick">
+      <button data-action="lent">🤝<b>ধার দিলাম</b><small>নতুন পাওনা</small></button>
+      <button data-action="returned">✅<b>ফেরত পেলাম</b><small>পাওনা কমান</small></button>
+      <button data-action="cash_in">💵<b>নগদ জমা</b><small>হাতে টাকা বাড়ান</small></button>
+      <button data-action="expense">🧾<b>খরচ</b><small>ব্যক্তিগত খরচ</small></button>
+    </div>
+  </div>
+  <div class="panel"><div class="head"><h2>যাদের কাছে টাকা বাকি</h2><button class="textBtn" data-page="people">সব দেখুন</button></div><div id="topPeople"></div></div>
+  <div class="panel"><div class="head"><h2>সাম্প্রতিক লেনদেন</h2><button class="textBtn" data-page="transactions">সব দেখুন</button></div><div id="recent"></div></div>
 </section>
-<section class="panel">
-<div class="sectionHead"><h2>লেনদেন যোগ করুন</h2></div>
-<form id="txForm">
-<input id="name" placeholder="ব্যক্তির নাম" required>
-<select id="type"><option value="lent">ধার দিলাম</option><option value="returned">ফেরত পেলাম</option><option value="cash_in">নগদ জমা</option><option value="expense">খরচ</option></select>
-<input id="amount" type="number" min="1" step="1" placeholder="টাকার পরিমাণ" required>
-<input id="date" type="date" required>
-<input id="note" placeholder="নোট (ঐচ্ছিক)">
-<button class="primary">সংরক্ষণ করুন</button>
-</form>
+
+<section id="people" class="page">
+  <div class="pageTitle"><div><h2>ব্যক্তিদের হিসাব</h2><p>কে কত টাকা পাবে এক নজরে দেখুন</p></div><button id="addPerson" class="primary">＋ ব্যক্তি</button></div>
+  <input id="personSearch" class="search" placeholder="🔎 নাম খুঁজুন">
+  <div id="peopleList"></div>
 </section>
-<section class="panel">
-<div class="sectionHead"><h2>যাদের কাছে টাকা বাকি</h2><input id="search" placeholder="নাম খুঁজুন"></div>
-<div id="people"></div>
+
+<section id="transactions" class="page">
+  <div class="pageTitle"><div><h2>সব লেনদেন</h2><p>আপনার টাকার সম্পূর্ণ ইতিহাস</p></div><button id="exportCsv" class="secondary">CSV</button></div>
+  <input id="txSearch" class="search" placeholder="🔎 নাম/নোট খুঁজুন">
+  <div id="txList"></div>
 </section>
-<section class="panel" id="personPanel" hidden>
-<div class="sectionHead"><h2 id="personTitle">ব্যক্তির হিসাব</h2><button id="closePerson">বন্ধ</button></div>
-<div id="personSummary"></div><div id="personTx"></div>
+
+<section id="reports" class="page">
+  <div class="pageTitle"><div><h2>রিপোর্ট</h2><p>আপনার হিসাবের সারাংশ</p></div></div>
+  <div class="reportGrid">
+    <div class="reportCard"><span>শুরু থেকে মোট ধার</span><b id="rLent">৳০</b></div>
+    <div class="reportCard"><span>শুরু থেকে মোট ফেরত</span><b id="rReturned">৳০</b></div>
+    <div class="reportCard"><span>বর্তমান পাওনা</span><b id="rDue">৳০</b></div>
+    <div class="reportCard"><span>বর্তমান নগদ</span><b id="rCash">৳০</b></div>
+  </div>
+  <div class="panel"><div class="head"><h2>লেনদেনের ধরন</h2></div><div id="typeReport"></div></div>
 </section>
-<section class="panel">
-<div class="sectionHead"><h2>সাম্প্রতিক লেনদেন</h2><button id="exportBtn">CSV</button></div>
-<div id="transactions"></div>
-</section>
-<section class="panel">
-<div class="sectionHead"><h2>সেটিংস</h2></div>
-<div class="settings">
-<label>শুরুর নগদ <input id="opening" type="number" min="0" value="500000"></label>
-<button id="saveOpening" class="primary">শুরুর ব্যালেন্স সেট করুন</button>
-<button id="backupBtn">Backup JSON</button><label class="fileBtn">Restore JSON<input id="restore" type="file" accept=".json" hidden></label>
-<button id="clearBtn" class="danger">সব ডাটা মুছুন</button>
-</div>
+
+<section id="settings" class="page">
+  <div class="pageTitle"><div><h2>সেটিংস</h2><p>অ্যাপ ও ডাটার নিয়ন্ত্রণ</p></div></div>
+  <div class="panel settingList">
+    <label>শুরুর নগদ ব্যালেন্স<input id="opening" type="number" min="0"></label>
+    <button id="saveOpening" class="primary wide">শুরুর ব্যালেন্স সংরক্ষণ</button>
+    <hr>
+    <button id="backup" class="secondary wide">💾 Backup তৈরি করুন</button>
+    <label class="filePick">📥 Backup Restore<input id="restore" type="file" accept=".json" hidden></label>
+    <button id="installSettings" class="secondary wide">📱 অ্যাপ Install করুন</button>
+    <hr>
+    <button id="clearAll" class="danger wide">সব হিসাব মুছে ফেলুন</button>
+  </div>
+  <div class="info">বর্তমান সংস্করণ: Professional v3<br>Cloud Sync: পরের ধাপে Supabase যুক্ত করা যাবে।</div>
 </section>
 </main>
-<footer>ডাটা এই ডিভাইসেই সংরক্ষিত থাকে। Cloud sync চাইলে Supabase যুক্ত করা যাবে।</footer>
-<script src="app.js"></script>
+
+<nav class="bottomNav">
+ <button data-page="dashboard" class="active">⌂<span>হোম</span></button>
+ <button data-page="people">👥<span>মানুষ</span></button>
+ <button data-page="transactions">☷<span>লেনদেন</span></button>
+ <button data-page="reports">▥<span>রিপোর্ট</span></button>
+ <button data-page="settings">⚙<span>সেটিংস</span></button>
+</nav>
+
+<div id="txModal" class="modal" hidden>
+ <div class="sheet">
+  <div class="sheetHead"><h2 id="modalTitle">লেনদেন যোগ করুন</h2><button id="closeModal">×</button></div>
+  <form id="txForm">
+   <input id="txName" placeholder="ব্যক্তির নাম (ধার/ফেরত হলে)" autocomplete="off">
+   <select id="txType"><option value="lent">🤝 ধার দিলাম</option><option value="returned">✅ ফেরত পেলাম</option><option value="cash_in">💵 নগদ জমা</option><option value="expense">🧾 খরচ</option></select>
+   <input id="txAmount" type="number" min="1" inputmode="decimal" placeholder="টাকার পরিমাণ" required>
+   <input id="txDate" type="date" required>
+   <input id="txNote" placeholder="নোট (ঐচ্ছিক)">
+   <button class="primary wide">সংরক্ষণ করুন</button>
+  </form>
+ </div>
+</div>
+
+<div id="personModal" class="modal" hidden>
+ <div class="sheet"><div class="sheetHead"><h2 id="personName">ব্যক্তির হিসাব</h2><button id="closePerson">×</button></div><div id="personBody"></div></div>
+</div>
+
+<script src="./app.js"></script>
 </body></html>

@@ -1,19 +1,17 @@
-# আমার টাকা হিসাব — PWA v2
+# আমার টাকা হিসাব — Professional PWA v3
 
-Improved mobile-first Bengali money/loan ledger.
+Mobile-first Bengali personal loan/cash ledger.
 
-### Improvements
-- Proper PWA manifest + 192/512 PNG icons
-- Install banner + Android install prompt
-- Offline cache update/versioning
-- Person detail view
-- Quick return button
-- Edit/delete transactions
-- Validation to prevent over-return and spending more cash than available
-- CSV export and JSON backup/restore
-- Local-first storage
+Features:
+- Dashboard with cash, lent, returned, due, expenses
+- People and individual account detail
+- Quick loan/return/cash/expense
+- Transaction history and search
+- Reports
+- Backup/restore and CSV
+- PWA manifest, icons, service worker
+- Offline-first local storage
 
-### Deploy
-Keep all files at repository root. Render Static Site:
+Render Static Site:
 Build Command: empty
 Publish Directory: .
